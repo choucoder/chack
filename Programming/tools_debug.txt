@@ -1,0 +1,62 @@
+objdump: Can be used to examine compiled binaries.
+objdump -M intel -D a.out | grep -A20 main.:
+
+-A20: only display 20 lines after the regular expression main.:
+-M intel: intel syntax
+
+GDB: Is used to show the state of the processor registers
+right before the program starts.
+
+gdb -q ./a.out
+(gdb) break main: pause execution program when it gets to main point
+(gdb) run
+(gdb) run <arguments>
+(gdb) where: show where the programs fail
+(gdb) info args: show info about args
+(gdb) backtrace: show the backtrace
+(gdb) info registers
+(gdb) info register address or (i r address): (o octal, x hexad, u unsigned, t binary) (x/t $rip)
+(gdb) set disassembly intel: Set to intel syntax
+(gdb) list: list info about source code compilated with -g flag
+(gdb) disassembly main: Dump of assembler code for function main():
+(gdb) x/display $register: Examine memory $register.
+(gdb) nexti: The processor will read the instruction at EIP, execute it and advance eip
+to the next instruction.
+### Commands ###
+x: examine
+i: instructions
+(gdb) i r eip: info register eip
+(gdb) x/{number}(x or i){size-letter} $rip: Display the memory as disassembled assembly language instructions
+(gdb) nexti, continue, cont: execute the next instruction followed by breakpoint
+(gdb) bt: backtrace the stack
+echo "set disassembly intel" > /.gdbinit
+cat .gdbinit
+
+GCC: Compiler C code.
+-g: include extra debuggin information, which will give GDB access to source code
+
+registers:
+    (AX, BX, CX, DX): Accumulator, Base, Counter, Data. Act as 
+    temporary variables for the CPU when it is executing machine
+    instructions.
+    (SP, BP, SI, DI): Pointers and indexes. Stack pointer, 
+    Base pointer, Source Index, Destination Index. SP and BP 
+    store 32-bits addresses, which essencially point to that
+    location in memory, for program execution and memory management.
+    SI, DI are used to point to the source and destination when
+    data needs to be read from or written to.
+    (EIP): Instruction pointer, point to the current instruction the
+    processor is reading. The processor reads each instruction using
+    the EIP register.
+    (EFLAGS): using for comparision and memory segmentations.
+
+Intel syntax:
+    operation <destination>, <source>
+    400527:     48 89 e5        mov rbp, rsp    : mov the value from SP to BP
+    40052a:     48 83 ec 10     sub rsp, 0x10   : subtract 10 from SP (storing the result in SP)
+
+Default Size of single unit
+    b  A single byte
+    h  A halfword, which is two bytes in size
+    w  A word, which is four bytes in size
+    g  A giant, which is eight bytes in size
