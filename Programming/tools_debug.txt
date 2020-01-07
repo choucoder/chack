@@ -13,7 +13,7 @@ gdb -q ./a.out
 (gdb) run <arguments>
 (gdb) where: show where the programs fail
 (gdb) info args: show info about args
-(gdb) backtrace: show the backtrace
+(gdb) backtrace or bt (full option): shows the record of each function call on the stack (Pila de llamadas)
 (gdb) info registers
 (gdb) info register address or (i r address): (o octal, x hexad, u unsigned, t binary) (x/t $rip)
 (gdb) set disassembly intel: Set to intel syntax
