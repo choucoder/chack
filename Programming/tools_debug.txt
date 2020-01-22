@@ -130,3 +130,17 @@ Memory Segmentation
                     c
                     d
     High addresses
+
+Commands for file handling
+    which: locate a command. return the pathnames of the files (or links) which
+    would be execute in the current enviroment.
+
+    chsh: allows any user to change his or her own login shell.
+    This program needs to be able to make changes to the /etc/passwd file,
+    but only on the line that pertains to the current user's  account
+
+    chwon: Change file owner and group. chown owner:group file
+
+    chmod u+s: turns on the setuid permision. (The program can access the files as root)
+
+unsigned char: Use the most significant bit instead of treating it as big flag for +/-
