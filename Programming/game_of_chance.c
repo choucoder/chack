@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "hacking.h"
 
-#define DATAFILE "chance.data"
+#define DATAFILE "/var/chance.data"
 
 struct user {
     int uid;
@@ -61,6 +61,8 @@ int main() {
                     player.current_game = pick_a_number;
                 else if(choice == 2)
                     player.current_game = dealer_no_match;
+                else if(choice == 3)
+                    player.current_game = &find_the_ace;
                 last_game = choice;
             }
             play_the_game();
@@ -297,10 +299,10 @@ void print_cards(char *message, char *cards, int user_pick) {
     int i;
 
     printf("\n\t*** %s ***\n", message);
-    printf("        \t._.\t._.\t._.\n");
-    printf("Cards: \t|%c|\t|%c|\t|%c|\n\t", cards[0], cards[1], cards[2]);
+    printf("        ._.\t._.\t._.\n");
+    printf("Cards: \t|%c|\t|%c|\t|%c|\t\n", cards[0], cards[1], cards[2]);
     if(user_pick == -1)
-        printf(" 1 \t 2 \t 3\n");
+        printf("\t 1 \t 2 \t 3\n");
     else {
         for(i=0; i < user_pick; i++)
             printf("\t");
@@ -371,4 +373,21 @@ int find_the_ace() {
             cards[i] = 'Q';
     }
     print_cards("End result", cards, pick);
+
+    if(pick == ace) {
+        printf("You have won %d credits from your first wager\n", wager_one);
+        player.credits += wager_one;
+        if(wager_two != -1) {
+            printf("and an additional %d credits from your second wager!\n", wager_two);
+            player.credits += wager_two;
+        }
+    } else {
+        printf("You have lost %d credits from your first wager!\n", wager_one);
+        player.credits -= wager_one;
+        if(wager_two != -1) {
+            printf("And an additional %d credits from your second wager!\n", wager_two);
+            player.credits -= wager_two;
+        }
+    }
+    return 0;
 }
